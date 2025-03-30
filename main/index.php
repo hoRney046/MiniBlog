@@ -1,11 +1,11 @@
 <?php
-// Подключаем базу данных
+
 $db = new SQLite3('blog.db');
 
-// Создаём таблицу, если её нет
+
 $db->exec("CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY, title TEXT, content TEXT)");
 
-// Если отправлена форма, добавляем запись
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['title'], $_POST['content'])) {
     $stmt = $db->prepare("INSERT INTO posts (title, content) VALUES (:title, :content)");
     $stmt->bindValue(':title', $_POST['title'], SQLITE3_TEXT);
@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['title'], $_POST['conte
     $stmt->execute();
 }
 
-// Получаем все записи
+
 $result = $db->query("SELECT * FROM posts ORDER BY id DESC");
 ?>
 
